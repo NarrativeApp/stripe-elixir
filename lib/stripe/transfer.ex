@@ -10,18 +10,18 @@ defmodule Stripe.Transfer do
   end
 
   def create_reversal(transfer_id, data \\ [], opts \\ []) do
-    Stripe.request(:post, transfer_reversal_endpoint(transfer_id), data, opts)
+    Stripe.do_call(:post, transfer_reversal_endpoint(transfer_id), data, opts)
   end
 
   def retrieve_reversal(transfer_id, reversal_id, opts \\ []) do
-    Stripe.request(:get, transfer_reversal_endpoint(transfer_id, reversal_id), [], opts)
+    Stripe.do_call(:get, transfer_reversal_endpoint(transfer_id, reversal_id), [], opts)
   end
 
   def update_reversal(transfer_id, reversal_id, data, opts \\ []) do
-    Stripe.request(:post, transfer_reversal_endpoint(transfer_id, reversal_id), data, opts)
+    Stripe.do_call(:post, transfer_reversal_endpoint(transfer_id, reversal_id), data, opts)
   end
 
   def list_reversals(transfer_id, pagination_opts, opts \\ []) do
-    Stripe.request(:get, transfer_reversal_endpoint(transfer_id), pagination_opts, opts)
+    Stripe.do_call(:get, transfer_reversal_endpoint(transfer_id), pagination_opts, opts)
   end
 end

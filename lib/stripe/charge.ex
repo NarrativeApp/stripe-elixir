@@ -10,10 +10,10 @@ defmodule Stripe.Charge do
   end
 
   def capture(id, opts \\ []) do
-    Stripe.request(:post, capture_endpoint(id), [], opts)
+    Stripe.do_call(:post, capture_endpoint(id), [], opts)
   end
-  
+
   def capture(id, data, opts) do
-    Stripe.request(:post, capture_endpoint(id), data, opts)
+    Stripe.do_call(:post, capture_endpoint(id), data, opts)
   end
 end

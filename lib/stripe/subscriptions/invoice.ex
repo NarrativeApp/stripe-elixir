@@ -10,14 +10,14 @@ defmodule Stripe.Invoice do
   end
 
   def line_items(invoice_id, pagination_opts \\ [], opts \\ []) do
-    Stripe.request(:get, "#{endpoint()}/#{invoice_id}/lines", pagination_opts, opts)
+    Stripe.do_call(:get, "#{endpoint()}/#{invoice_id}/lines", pagination_opts, opts)
   end
 
   def upcoming(data, opts \\ []) do
-    Stripe.request(:get, "#{endpoint()}/upcoming", data, opts)
+    Stripe.do_call(:get, "#{endpoint()}/upcoming", data, opts)
   end
 
   def pay(invoice_id, opts \\ []) do
-    Stripe.request(:post, "#{endpoint()}/#{invoice_id}/pay", [], opts)
+    Stripe.do_call(:post, "#{endpoint()}/#{invoice_id}/pay", [], opts)
   end
 end

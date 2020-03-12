@@ -8,6 +8,7 @@ defmodule Stripe.Webhook do
     case verify_header(payload, signature_header, secret, tolerance) do
       :ok ->
         {:ok, Poison.decode!(payload)}
+
       error ->
         error
     end
@@ -16,10 +17,16 @@ defmodule Stripe.Webhook do
   defp verify_header(payload, signature_header, secret, tolerance) do
     case get_timestamp_and_signatures(signature_header, @expected_scheme) do
       {nil, _} ->
-        {:error, %SignatureVerificationError{message: "Unable to extract timestamp and signatures from header"}}
+        {:error,
+         %SignatureVerificationError{
+           message: "Unable to extract timestamp and signatures from header"
+         }}
 
       {_, []} ->
-        {:error, %SignatureVerificationError{message: "No signatures found with expected scheme #{@expected_scheme}"}}
+        {:error,
+         %SignatureVerificationError{
+           message: "No signatures found with expected scheme #{@expected_scheme}"
+         }}
 
       {timestamp, signatures} ->
         with {:ok, timestamp} <- check_timestamp(timestamp, tolerance),
@@ -34,7 +41,7 @@ defmodule Stripe.Webhook do
   defp get_timestamp_and_signatures(signature_header, scheme) do
     signature_header
     |> String.split(",")
-    |> Enum.map(& String.split(&1, "="))
+    |> Enum.map(&String.split(&1, "="))
     |> Enum.reduce({nil, []}, fn
       ["t", timestamp], {nil, signatures} ->
         {to_integer(timestamp), signatures}
@@ -51,15 +58,20 @@ defmodule Stripe.Webhook do
     case Integer.parse(timestamp) do
       {timestamp, _} ->
         timestamp
+
       :error ->
         nil
     end
   end
 
   defp check_timestamp(timestamp, tolerance) do
+    require IEx
+    IEx.pry()
     now = System.system_time(:seconds)
-    if timestamp < (now - tolerance) do
-      {:error, %SignatureVerificationError{message: "Timestamp outside the tolerance zone (#{now})"}}
+
+    if timestamp > now - tolerance do
+      {:error,
+       %SignatureVerificationError{message: "Timestamp outside the tolerance zone (#{now})"}}
     else
       {:ok, timestamp}
     end
@@ -68,10 +80,14 @@ defmodule Stripe.Webhook do
   defp check_signatures(signatures, timestamp, payload, secret) do
     signed_payload = "#{timestamp}.#{payload}"
     expected_signature = compute_signature(signed_payload, secret)
-    if Enum.any?(signatures, & secure_equals?(&1, expected_signature)) do
+
+    if Enum.any?(signatures, &secure_equals?(&1, expected_signature)) do
       {:ok, signatures}
     else
-      {:error, %SignatureVerificationError{message: "No signatures found matching the expected signature for payload"}}
+      {:error,
+       %SignatureVerificationError{
+         message: "No signatures found matching the expected signature for payload"
+       }}
     end
   end
 
@@ -83,14 +99,18 @@ defmodule Stripe.Webhook do
   defp secure_equals?(input, expected) when byte_size(input) == byte_size(expected) do
     input = String.to_charlist(input)
     expected = String.to_charlist(expected)
+    IO.inspect(input)
     secure_compare(input, expected)
   end
+
   defp secure_equals?(_, _), do: false
 
   defp secure_compare(acc \\ 0, input, expected)
   defp secure_compare(acc, [], []), do: acc == 0
+
   defp secure_compare(acc, [input_codepoint | input], [expected_codepoint | expected]) do
     import Bitwise
+
     acc
     |> bor(input_codepoint ^^^ expected_codepoint)
     |> secure_compare(input, expected)

@@ -6,6 +6,6 @@ defmodule Stripe.Subscription do
   end
 
   def delete_discount(subscription_id, opts \\ []) do
-    Stripe.request(:delete, "#{endpoint()}/#{subscription_id}/discount", [], opts)
+    Stripe.do_call(:delete, "#{endpoint()}/#{subscription_id}/discount", [], opts)
   end
 end

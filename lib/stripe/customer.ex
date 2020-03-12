@@ -8,25 +8,25 @@ defmodule Stripe.Customer do
   # discount
 
   def delete_discount(customer_id, opts \\ []) do
-    Stripe.request(:delete, "#{endpoint()}/#{customer_id}/discount", [], opts)
+    Stripe.do_call(:delete, "#{endpoint()}/#{customer_id}/discount", [], opts)
   end
 
   # sources
 
   def retrieve_source(customer_id, source_id, opts \\ []) do
-    Stripe.request(:get, "#{endpoint()}/#{customer_id}/sources/#{source_id}", [], opts)
+    Stripe.do_call(:get, "#{endpoint()}/#{customer_id}/sources/#{source_id}", [], opts)
   end
 
   def update_source(customer_id, source_id, updates, opts \\ []) do
-    Stripe.request(:post, "#{endpoint()}/#{customer_id}/sources/#{source_id}", updates, opts)
+    Stripe.do_call(:post, "#{endpoint()}/#{customer_id}/sources/#{source_id}", updates, opts)
   end
 
   def create_source(customer_id, data, opts \\ []) do
-    Stripe.request(:post, "#{endpoint()}/#{customer_id}/sources", data, opts)
+    Stripe.do_call(:post, "#{endpoint()}/#{customer_id}/sources", data, opts)
   end
 
   def delete_source(customer_id, data, opts \\ []) do
-    Stripe.request(:delete, "#{endpoint()}/#{customer_id}/sources/#{data[:source]}", [], opts)
+    Stripe.do_call(:delete, "#{endpoint()}/#{customer_id}/sources/#{data[:source]}", [], opts)
   end
 
   # card
@@ -45,7 +45,7 @@ defmodule Stripe.Customer do
 
   def list_cards(customer_id, pagination_opts \\ [], opts \\ []) do
     pagination_opts = put_in(pagination_opts, [:object], "card")
-    Stripe.request(:get, "#{endpoint()}/#{customer_id}/sources", pagination_opts, opts)
+    Stripe.do_call(:get, "#{endpoint()}/#{customer_id}/sources", pagination_opts, opts)
   end
 
   # bank_account
@@ -64,10 +64,15 @@ defmodule Stripe.Customer do
 
   def list_bank_accounts(customer_id, pagination_opts \\ [], opts \\ []) do
     pagination_opts = put_in(pagination_opts, [:object], "bank_account")
-    Stripe.request(:get, "#{endpoint()}/#{customer_id}/sources", pagination_opts, opts)
+    Stripe.do_call(:get, "#{endpoint()}/#{customer_id}/sources", pagination_opts, opts)
   end
 
   def verify_bank_account(customer_id, bank_acct_id, amounts, opts \\ []) do
-    Stripe.request(:post, "#{endpoint()}/#{customer_id}/sources/#{bank_acct_id}/verify", [amounts: amounts], opts)
+    Stripe.do_call(
+      :post,
+      "#{endpoint()}/#{customer_id}/sources/#{bank_acct_id}/verify",
+      [amounts: amounts],
+      opts
+    )
   end
 end
