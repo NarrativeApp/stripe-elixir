@@ -54,7 +54,7 @@ defmodule Stripe do
   end
 
   def do_call(action, endpoint, data, opts) when action in [:get, :post, :delete] do
-    request(method: action, url: endpoint, query: data, body: data, headers: create_headers(opts))
+    request(method: action, url: endpoint, query: data, headers: create_headers(opts))
     |> handle_response
   end
 
