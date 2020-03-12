@@ -6,7 +6,7 @@ defmodule Stripe do
   use Tesla
 
   plug(Tesla.Middleware.BaseUrl, "https://api.stripe.com/v1/")
-  plug(Tesla.Middleware.JSON)
+  plug(Tesla.Middleware.JSON, engine: Jason)
 
   @client_version Mix.Project.config()[:version]
 
