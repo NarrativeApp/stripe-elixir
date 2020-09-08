@@ -89,7 +89,11 @@ defmodule Stripe do
     {:error, error_struct}
   end
 
-  defp handle_response({:error, reason}) do
+  defp handle_response({:error, reason}) when is_binary(reason) do
     %APIConnectionError{message: "Network Error: #{reason}"}
+  end
+
+  defp handle_response({:error, reason}) do
+    %APIConnectionError{message: "Network Error: #{inspect(reason)}"}
   end
 end
