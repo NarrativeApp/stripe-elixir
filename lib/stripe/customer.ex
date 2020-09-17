@@ -1,6 +1,8 @@
 defmodule Stripe.Customer do
   use Stripe.API, [:retrieve, :update, :create, :list, :delete]
 
+  @moduledoc false
+
   def endpoint do
     "/customers"
   end

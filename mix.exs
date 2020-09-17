@@ -39,14 +39,13 @@ defmodule Stripe.Mixfile do
 
   defp deps do
     [
-      {:tesla, "~> 1.3.0"},
-      {:hackney, "~> 1.15.2"},
+      {:credo, "~> 1.2", only: [:dev, :test], runtime: false},
+      {:earmark, "~> 1.2", only: [:dev, :test], runtime: false},
+      {:ex_doc, ">= 0.0.0", only: [:dev, :test], runtime: false},
+      {:hackney, "~> 1.16"},
+      {:inch_ex, ">= 0.0.0", only: [:dev, :test], runtime: false},
       {:jason, ">= 1.0.0"},
-
-      # Docs
-      {:ex_doc, "~> 0.18.0", only: :dev},
-      {:earmark, "~> 1.2.0", only: :dev},
-      {:inch_ex, ">= 0.0.0", only: :dev}
+      {:tesla, "~> 1.3.0"}
     ]
   end
 end

@@ -1,6 +1,8 @@
 defmodule Stripe.Charge do
   use Stripe.API, [:list, :retrieve, :create, :update]
 
+  @moduledoc false
+
   def endpoint do
     "charges"
   end

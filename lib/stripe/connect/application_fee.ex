@@ -1,6 +1,8 @@
 defmodule Stripe.ApplicationFee do
   use Stripe.API, [:create, :retrieve, :update, :list]
 
+  @moduledoc false
+
   def endpoint do
     "application_fees"
   end

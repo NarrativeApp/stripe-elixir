@@ -1,6 +1,8 @@
 defmodule Stripe.Dispute do
   use Stripe.API, [:list, :create, :update]
 
+  @moduledoc false
+
   def endpoint do
     "disputes"
   end

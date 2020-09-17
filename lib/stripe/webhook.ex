@@ -1,6 +1,8 @@
 defmodule Stripe.Webhook do
   alias Stripe.SignatureVerificationError
 
+  @moduledoc false
+
   @default_tolerance 300
   @expected_scheme "v1"
 
@@ -65,8 +67,6 @@ defmodule Stripe.Webhook do
   end
 
   defp check_timestamp(timestamp, tolerance) do
-    require IEx
-    IEx.pry()
     now = System.system_time(:seconds)
 
     if timestamp > now - tolerance do
@@ -99,7 +99,6 @@ defmodule Stripe.Webhook do
   defp secure_equals?(input, expected) when byte_size(input) == byte_size(expected) do
     input = String.to_charlist(input)
     expected = String.to_charlist(expected)
-    IO.inspect(input)
     secure_compare(input, expected)
   end
 

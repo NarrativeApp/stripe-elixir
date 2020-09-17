@@ -1,4 +1,6 @@
 defmodule Stripe.Account do
+  @moduledoc false
+
   use Stripe.API, [:create, :retrieve, :update, :list, :delete]
 
   def endpoint, do: "accounts"

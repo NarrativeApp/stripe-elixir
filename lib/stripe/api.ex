@@ -1,4 +1,6 @@
 defmodule Stripe.API do
+  @moduledoc false
+
   defmacro __using__(opts) do
     quote do
       if :create in unquote(opts) do

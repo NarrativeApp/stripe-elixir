@@ -1,6 +1,8 @@
 defmodule Stripe.Invoice do
   use Stripe.API, [:create, :retrieve, :update, :list]
 
+  @moduledoc false
+
   def endpoint do
     "invoices"
   end

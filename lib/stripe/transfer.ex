@@ -1,6 +1,8 @@
 defmodule Stripe.Transfer do
   use Stripe.API, [:create, :retrieve, :update, :list]
 
+  @moduledoc false
+
   def endpoint do
     "transfers"
   end

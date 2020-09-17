@@ -5,6 +5,7 @@ name: Privately published Elixir Library
 env:
   ELIXIR_VERSION: "1.9"
   OTP_VERSION: "22.2"
+  STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_TEST_KEY }}
 
 jobs:
   deps:
@@ -88,7 +89,7 @@ jobs:
         with:
           name: build
           path: _build/
-      - run: mix credo --strict || true
+      - run: mix credo --strict
 
   formatter:
     runs-on: ubuntu-latest
