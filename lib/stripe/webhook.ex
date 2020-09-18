@@ -9,7 +9,7 @@ defmodule Stripe.Webhook do
   def construct_event(payload, signature_header, secret, tolerance \\ @default_tolerance) do
     case verify_header(payload, signature_header, secret, tolerance) do
       :ok ->
-        {:ok, Poison.decode!(payload)}
+        {:ok, Jason.decode!(payload)}
 
       error ->
         error
