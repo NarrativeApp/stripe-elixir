@@ -45,7 +45,7 @@ defmodule Stripe.Mixfile do
       {:hackney, "~> 1.16"},
       {:inch_ex, ">= 0.0.0", only: [:dev, :test], runtime: false},
       {:jason, ">= 1.0.0"},
-      {:tesla, "~> 1.3.0"}
+      {:tesla, "~> 1.4.1"}
     ]
   end
 end
